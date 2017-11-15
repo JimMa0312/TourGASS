@@ -2,4 +2,7 @@
 <litepal>
     <dbname value="TourGass" />
     <version value="1"/>
+    <list>
+
+    </list>
 </litepal>

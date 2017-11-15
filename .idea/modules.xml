@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TourGASS.iml" filepath="$PROJECT_DIR$/TourGASS.iml" />
+      <module fileurl="file://D:\Android\TourGASS\TourGASS.iml" filepath="D:\Android\TourGASS\TourGASS.iml" />
       <module fileurl="file://F:\code\Android\TourGASS\.idea\TourGASS.iml" filepath="F:\code\Android\TourGASS\.idea\TourGASS.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\Android\TourGASS\app\app.iml" filepath="D:\Android\TourGASS\app\app.iml" />
     </modules>
   </component>
 </project>
