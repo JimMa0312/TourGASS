@@ -3,4 +3,20 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--Add color-->
+    <color name="white">#ffffffff</color>
+    <color name="blue">#669ff1</color>
+    <color name="blue_focused">#cc669ff1</color>
+    <color name="yellow">#F0E68C</color>
+    <color name="yellow_focused">#F0E68C</color>
+    <color name="green">#4f943d</color>
+    <color name="green_focused">#cc4f943d</color>
+    <color name="red">#D2691E</color>
+    <color name="red_focused">#D2691E</color>
+    <color name="purple">#BA55D3</color>
+    <color name="purple_focused">#BA55D3</color>
+
+    <color name="login_gray">#bcbfb9</color>
+    <color name="txt_gray">#6e6e6e</color>
 </resources>
