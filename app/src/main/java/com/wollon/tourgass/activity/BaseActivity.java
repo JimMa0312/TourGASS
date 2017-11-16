@@ -12,7 +12,7 @@ import com.wollon.tourgass.dao.User;
  * Created by 漫聆默 on 2017/11/16 0016.
  */
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
     protected Context context;
     public static User user;
@@ -20,13 +20,14 @@ public class BaseActivity extends AppCompatActivity {
     private void printLog() {
         Log.d(TAG, getClass().getName() + "----->" + Thread.currentThread().getStackTrace()[3].getMethodName());
     }
+    protected abstract void init();
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected final void onCreate(@Nullable Bundle savedInstanceState) {
         printLog();
         super.onCreate(savedInstanceState);
-
         context=this;
+        init();
     }
 
     @Override

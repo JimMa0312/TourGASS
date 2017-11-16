@@ -38,8 +38,7 @@ public class LoginActivity extends BaseActivity {
     private IIndenity iIndenity;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void init() {
         setContentView(R.layout.activity_login);
 
         llAccount=(LinearLayout) findViewById(R.id.account_ll);
@@ -57,8 +56,10 @@ public class LoginActivity extends BaseActivity {
                 account=etAccount.getText().toString();
                 password=etPassword.getText().toString();
                 UserLogin userLogin=new UserLogin(account,password);
-
                 user=iIndenity.login(userLogin);
+                if(cbAutoLogin.isChecked()){
+                    iIndenity.rememberUser(user,context);
+                }
                 if(user !=null){
                     LoginActivity.this.finish();
                 }else{
@@ -67,6 +68,9 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-
+        user=iIndenity.verificationUser(context);
+        if(user!=null){
+            LoginActivity.this.finish();
+        }
     }
 }
