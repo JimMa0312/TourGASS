@@ -1,5 +1,7 @@
 package com.wollon.tourgass.operator;
 
+import android.content.Context;
+
 import com.wollon.tourgass.dao.User;
 import com.wollon.tourgass.dto.UserLogin;
 
@@ -26,6 +28,15 @@ public interface IIndenity {
      * 记住用户
      * 将用户相关信息保存到本地文件中
      * @param user
+     * @param context
      */
-    public void rememberUser(User user);
+    public void rememberUser(User user, Context context);
+
+    /**
+     * 验证用户
+     * 验证本地文件中的用户是否符合正确
+     * @param context
+     * @return
+     */
+    public User verificationUser(Context context);
 }

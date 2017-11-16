@@ -29,4 +29,16 @@ public class UserDao {
         List<User> users= DataSupport.where("account = ? and password= ?",userLogin.getUserName(),userLogin.getPassword()).find(User.class);
         return users;
     }
+
+    /**
+     * 查询用户数据
+     * @param id
+     * @param account
+     * @param pwd
+     * @return
+     */
+    public List<User> sleectUser(int id, String account, String pwd){
+        List<User> users= DataSupport.where("id = ? and account = ? and password= ?",Integer.toString(id),account,pwd).find(User.class);
+        return users;
+    }
 }
