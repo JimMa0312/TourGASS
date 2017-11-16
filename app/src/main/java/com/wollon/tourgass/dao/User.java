@@ -12,7 +12,7 @@ public class User extends DataSupport{
     private String password;//用户密码
     private String nickname;//用户昵称
 
-    public User(){
+    public User() {
 
     }
 
