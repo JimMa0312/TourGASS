@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import com.amap.api.maps.MapView;
 import com.wollon.tourgass.R;
 import com.wollon.tourgass.dao.User;
 import com.wollon.tourgass.operator.impl.LoginImpl;
+import com.wollon.tourgass.util.MD5Utils;
 
 public class MainActivity extends BaseActivity {
     private Button btAddData;
@@ -71,6 +73,8 @@ public class MainActivity extends BaseActivity {
         if(aMap == null){
             aMap=mMapView.getMap();
         }
+
+        Log.d("AmapSHA",MD5Utils.sHA1(context));
     }
 
     @Override

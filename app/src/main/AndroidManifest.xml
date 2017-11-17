@@ -26,7 +26,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="A4:A4:BE:14:D7:39:65:A8:15:A3:B9:7F:0C:5F:C1:23:C9:6B:B0:E1"/>
+            android:value="141a9b67f01c41946d5c84e2b97248d0"/>
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
