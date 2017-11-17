@@ -20,14 +20,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void printLog() {
         Log.d(TAG, getClass().getName() + "----->" + Thread.currentThread().getStackTrace()[3].getMethodName());
     }
-    protected abstract void init();
+    protected abstract void init(@Nullable Bundle savedInstanceState);
 
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
         printLog();
         super.onCreate(savedInstanceState);
         context=this;
-        init();
+        init(savedInstanceState);
     }
 
     @Override

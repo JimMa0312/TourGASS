@@ -38,7 +38,7 @@ public class LoginActivity extends BaseActivity {
     private IIndenity iIndenity;
 
     @Override
-    protected void init() {
+    protected void init(Bundle savedInstanceState) {
         setContentView(R.layout.activity_login);
 
         llAccount=(LinearLayout) findViewById(R.id.account_ll);
