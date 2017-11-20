@@ -24,10 +24,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
+            android:elevation="6dp"
         android:text="@string/test_add_db" />
 
         <Button
             android:id="@+id/test_login"
+            android:elevation="6dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -38,9 +40,9 @@
         app:fabSize="normal"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
+        app:borderWidth="0dp"
         android:id="@+id/fab"
         android:src="@drawable/fab_plus"
-
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_gravity="bottom|right"
