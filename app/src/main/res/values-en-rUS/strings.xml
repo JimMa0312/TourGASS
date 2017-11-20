@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">TourGASS</string>
+    <string name="app_name_ch">TourGASS</string>
+
+    <!-- activity_login -->
+    <string name="account">Account: </string>
+    <string name="import_account">Enter Account</string>
+    <string name="password">Password:</string>
+    <string name="import_password">Enter Password</string>
+    <string name="auto_login">Remember account</string>
+    <string name="login">Login</string>
+
+    <!--提示信息-->
+    <string name="message_login">Please check your inputes</string>
+    
+    <!--测试信息-->
+    <string name="test_add_db">Add date</string>
+    <string name="test_login">Login</string>
+</resources>

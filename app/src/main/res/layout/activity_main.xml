@@ -20,23 +20,19 @@
 
         <Button
             android:id="@+id/test_Add_bt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-            android:elevation="6dp"
-        android:text="@string/test_add_db"
-            tools:ignore="ButtonStyle" />
-
-        <Button
-            android:id="@+id/test_login"
-            android:elevation="6dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="@string/test_login"
-            tools:ignore="ButtonStyle" />
+            android:text="@string/test_add_db" />
+
+        <Button
+            android:id="@+id/test_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="@string/test_login" />
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         app:fabSize="normal"
