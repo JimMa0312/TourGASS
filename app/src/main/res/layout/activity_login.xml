@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#eaf8ff"
-              android:orientation="vertical"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eaf8ff"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name_ch"
             android:textColor="@color/blue"
-            android:textSize="30dp"/>
+            android:textSize="30dp" />
 
         <View
             android:layout_width="match_parent"
@@ -27,7 +26,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
-            android:background="#89dafd"/>
+            android:background="#89dafd" />
 
     </LinearLayout>
 
@@ -58,7 +57,7 @@
                 android:text="@string/account"
                 android:textColor="@color/txt_gray"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/account_et"
@@ -69,7 +68,7 @@
                 android:maxLength="16"
                 android:paddingBottom="10dip"
                 android:paddingRight="10dip"
-                android:paddingTop="10dip"/>
+                android:paddingTop="10dip" />
         </LinearLayout>
 
         <LinearLayout
@@ -93,7 +92,7 @@
                 android:text="@string/password"
                 android:textColor="@color/txt_gray"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/password_et"
@@ -105,7 +104,7 @@
                 android:maxLength="16"
                 android:paddingBottom="10dip"
                 android:paddingEnd="10dip"
-                android:paddingTop="10dip"/>
+                android:paddingTop="10dip" />
         </LinearLayout>
 
         <LinearLayout
@@ -125,7 +124,7 @@
                 android:background="@drawable/checkbox"
                 android:button="@null"
                 android:checked="false"
-                android:textColor="@color/txt_gray"/>
+                android:textColor="@color/txt_gray" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -134,7 +133,7 @@
                 android:text="@string/auto_login"
                 android:textColor="@color/txt_gray"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <Button
@@ -147,7 +146,7 @@
             android:background="@color/selector_button"
             android:text="@string/login"
             android:textColor="@color/white"
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
     </LinearLayout>
 
 </LinearLayout>
