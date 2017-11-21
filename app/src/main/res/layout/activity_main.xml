@@ -6,41 +6,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.amap.api.maps.MapView
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </com.amap.api.maps.MapView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/test_Add_bt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="@string/test_add_db" />
-
-        <Button
-            android:id="@+id/test_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="@string/test_login" />
-    </LinearLayout>
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <com.amap.api.maps.MapView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </com.amap.api.maps.MapView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/test_Add_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/test_add_db" />
+
+                <Button
+                    android:id="@+id/test_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/test_login" />
+            </LinearLayout>
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tool_bas"
                 android:layout_width="match_parent"
@@ -48,6 +48,20 @@
                 android:background="?attr/colorPrimary"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+            <android.support.design.widget.FloatingActionButton
+                app:fabSize="normal"
+                app:elevation="6dp"
+                app:pressedTranslationZ="12dp"
+                app:borderWidth="0dp"
+                android:id="@+id/fab"
+                android:src="@drawable/fab_plus"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="100dp"
+                android:layout_marginRight="5dp"
+                tools:ignore="RtlHardcoded" />
         </FrameLayout>
 
         <android.support.design.widget.NavigationView
@@ -58,20 +72,6 @@
             app:menu="@menu/nav_menu"
             app:headerLayout="@layout/nav_header"/>
     </android.support.v4.widget.DrawerLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        app:fabSize="normal"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        app:borderWidth="0dp"
-        android:id="@+id/fab"
-        android:src="@drawable/fab_plus"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="100dp"
-        android:layout_marginRight="5dp"
-        tools:ignore="RtlHardcoded" />
 
 </FrameLayout>
 
