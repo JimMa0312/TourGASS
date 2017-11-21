@@ -16,4 +16,8 @@
     <!--测试信息-->
     <string name="test_add_db">Add date</string>
     <string name="test_login">Login</string>
+
+    <!--导航栏信息-->
+    <string name="nav_call">Call</string>
+    <string name="nav_friend">Friend</string>
 </resources>

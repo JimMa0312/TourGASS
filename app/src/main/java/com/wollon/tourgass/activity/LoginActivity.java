@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -62,15 +63,19 @@ public class LoginActivity extends BaseActivity {
                 }
                 if(user !=null){
                     LoginActivity.this.finish();
+                    Log.d("LoginActicvity","登录成功！");
                 }else{
                     Toast.makeText(context,R.string.message_login,Toast.LENGTH_LONG);
+                    Log.w("LoginActicvity","登录失败！");
                 }
             }
         });
 
         user=iIndenity.verificationUser(context);
+        Log.d("LoginActicvity","登录成功！");
         if(user!=null){
             LoginActivity.this.finish();
+            Log.w("LoginActicvity","登录失败！");
         }
     }
 }

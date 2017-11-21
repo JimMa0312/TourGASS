@@ -16,4 +16,8 @@
     <!--测试信息-->
     <string name="test_add_db">添加数据</string>
     <string name="test_login">登录测试</string>
+
+    <!--导航栏信息-->
+    <string name="nav_call">拨打电话</string>
+    <string name="nav_friend">好友</string>
 </resources>
