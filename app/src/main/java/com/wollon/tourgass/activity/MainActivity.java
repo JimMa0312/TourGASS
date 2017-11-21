@@ -177,7 +177,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.home:
+            case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             case R.id.backup:
