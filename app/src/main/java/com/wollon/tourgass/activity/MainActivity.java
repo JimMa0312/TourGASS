@@ -36,6 +36,7 @@ public class MainActivity extends BaseActivity {
     private Toolbar toolbar;//工具栏
     private DrawerLayout mDrawerLayout;//滑动菜单
     private NavigationView navView;//拓展菜单
+    private MyLocationStyle myLocationStyle;
 
     private MapView mMapView=null;
 
@@ -139,11 +140,10 @@ public class MainActivity extends BaseActivity {
 
     private void settingnUI(){
         mUiSetting.setCompassEnabled(true);//打开指南针
-
-        MyLocationStyle myLocationStyle;
         myLocationStyle=new MyLocationStyle();//初始化定位蓝点样式类
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW);//连续定位，跟随设备;
         myLocationStyle.interval(2000);
+        myLocationStyle.showMyLocation(true);
         aMap.setMyLocationStyle(myLocationStyle);
         aMap.setMyLocationEnabled(true);
 
