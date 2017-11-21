@@ -168,7 +168,8 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    public boolean onCreateOptionMenu(Menu menu){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.toolbar,menu);
 
         return true;
