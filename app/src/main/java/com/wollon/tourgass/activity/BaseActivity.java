@@ -44,7 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
     protected Context context;
-    public static User user;
+    public static User user;//存储用户信息
+    public static boolean isLogin=false;//确认是否已经登录,默认未登陆
 
     private void printLog() {
         Log.d(TAG, getClass().getName() + "----->" + Thread.currentThread().getStackTrace()[3].getMethodName());
@@ -97,6 +98,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         printLog();
         super.onDestroy();
     }
+
+
 
     //-----------权限问题
 

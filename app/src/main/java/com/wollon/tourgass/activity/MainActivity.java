@@ -26,6 +26,7 @@ import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.wollon.tourgass.R;
 import com.wollon.tourgass.dao.User;
+import com.wollon.tourgass.operator.IIndenity;
 import com.wollon.tourgass.operator.impl.LoginImpl;
 import com.wollon.tourgass.util.MD5Utils;
 
@@ -41,19 +42,6 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
     private MyLocationStyle myLocationStyle;
 
     private MapView mMapView=null;
-
-    private OnClickListener clickListener =new OnClickListener(){
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.test_Add_bt:
-
-                    break;
-                case R.id.test_login:
-                    break;
-            }
-        }
-    };
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -91,6 +79,11 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         settingnUI();
 
         Log.d("AmapSHA",MD5Utils.sHA1(context));
+
+
+        AutoLogin();//实现自动登陆
+        //TODO 自动登陆后续工作
+
     }
 
     @Override
@@ -225,6 +218,24 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
 
         } else {
             Log.e("amap", "定位失败");
+        }
+    }
+
+    /**
+     * 初始化时，实现自动登录功能
+     * @return
+     */
+    private boolean AutoLogin(){
+        IIndenity iIndenity=new LoginImpl();
+        user=iIndenity.verificationUser(this);
+        if(user!=null){
+            Toast.makeText(this,"登录成功",Toast.LENGTH_SHORT).show();
+            isLogin=true;
+            return isLogin;
+        }else{
+            Toast.makeText(this,"登录失败！",Toast.LENGTH_SHORT).show();
+            isLogin=false;
+            return isLogin;
         }
     }
 }
