@@ -1,6 +1,7 @@
 package com.wollon.tourgass.activity;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
@@ -27,11 +31,13 @@ import com.wollon.tourgass.dao.User;
 import com.wollon.tourgass.operator.impl.LoginImpl;
 import com.wollon.tourgass.util.MD5Utils;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener{
     private Button btAddData;
     private Button btLogin;
     private UiSettings mUiSetting;
     private AMap aMap;
+    private AMapLocationClient mapLocationClient=null;//调用AMapLocationCLient对象
+
 
     private Toolbar toolbar;//工具栏
     private DrawerLayout mDrawerLayout;//滑动菜单
@@ -140,10 +146,14 @@ public class MainActivity extends BaseActivity {
 
     private void settingnUI(){
         mUiSetting.setCompassEnabled(true);//打开指南针
+
+
+
         myLocationStyle=new MyLocationStyle();//初始化定位蓝点样式类
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW);//连续定位，跟随设备;
         myLocationStyle.interval(2000);
         myLocationStyle.showMyLocation(true);
+
         aMap.setMyLocationStyle(myLocationStyle);
         aMap.setMyLocationEnabled(true);
 
@@ -151,6 +161,8 @@ public class MainActivity extends BaseActivity {
         aMap.setMyLocationEnabled(true);
 
         mUiSetting.setScaleControlsEnabled(true);
+
+        aMap.setOnMyLocationChangeListener(this);
     }
 
     private void setToolbar() {
@@ -193,6 +205,33 @@ public class MainActivity extends BaseActivity {
             default:
         }
         return true;
+    }
+
+    @Override
+    public void onMyLocationChange(Location location) {
+        if(location != null) {
+            Log.e("amap", "onMyLocationChange 定位成功， lat: " + location.getLatitude() + " lon: " + location.getLongitude());
+            Bundle bundle = location.getExtras();
+            if(bundle != null) {
+                int errorCode = bundle.getInt(MyLocationStyle.ERROR_CODE);
+                String errorInfo = bundle.getString(MyLocationStyle.ERROR_INFO);
+                // 定位类型，可能为GPS WIFI等，具体可以参考官网的定位SDK介绍
+                int locationType = bundle.getInt(MyLocationStyle.LOCATION_TYPE);
+
+                /*
+                errorCode
+                errorInfo
+                locationType
+                */
+                Log.e("amap", "定位信息， code: " + errorCode + " errorInfo: " + errorInfo + " locationType: " + locationType );
+            } else {
+                Log.e("amap", "定位信息， bundle is null ");
+
+            }
+
+        } else {
+            Log.e("amap", "定位失败");
+        }
     }
 }
 
