@@ -3,9 +3,7 @@ package com.wollon.tourgass.activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -84,7 +82,7 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         navView=(NavigationView)findViewById(R.id.nav_view);
         NavigationView navView=(NavigationView)findViewById(R.id.nav_view);
 
-        navView.setCheckedItem(R.id.nav_call);
+        /*navView.setCheckedItem(R.id.nav_call);*/
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

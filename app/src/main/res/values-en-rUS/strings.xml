@@ -20,4 +20,8 @@
     <!--导航栏信息-->
     <string name="nav_call">Call</string>
     <string name="nav_friend">Friend</string>
+    <string name="nav_note">Note</string>
+    <string name="nav_scenic">Scenic</string>
+    <string name="nav_plan">Plan</string>
+    <string name="nav_logout">Logout</string>
 </resources>

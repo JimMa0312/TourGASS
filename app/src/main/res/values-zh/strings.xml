@@ -20,4 +20,8 @@
     <!--导航栏信息-->
     <string name="nav_call">拨打电话</string>
     <string name="nav_friend">好友</string>
+    <string name="nav_note">日记管理</string>
+    <string name="nav_scenic">景点列表</string>
+    <string name="nav_plan">个人计划</string>
+    <string name="nav_logout">注销</string>
 </resources>
