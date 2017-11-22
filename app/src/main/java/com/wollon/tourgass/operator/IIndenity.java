@@ -39,4 +39,11 @@ public interface IIndenity {
      * @return
      */
     public User verificationUser(Context context);
+
+    /**
+     * 注销用户
+     * 删除本地文件
+     * @return
+     */
+    public boolean loginOut(Context context);
 }

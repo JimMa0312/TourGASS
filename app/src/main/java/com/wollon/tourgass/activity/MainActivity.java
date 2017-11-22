@@ -30,8 +30,6 @@ import com.wollon.tourgass.operator.impl.LoginImpl;
 import com.wollon.tourgass.util.MD5Utils;
 
 public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener{
-    private Button btAddData;
-    private Button btLogin;
     private UiSettings mUiSetting;
     private AMap aMap;
     private AMapLocationClient mapLocationClient=null;//调用AMapLocationCLient对象
@@ -52,23 +50,7 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
 
                     break;
                 case R.id.test_login:
-                    Intent intent=new Intent();
-                    intent.setClass(context,LoginActivity.class);
-                    startActivity(intent);
                     break;
-            }
-        }
-    };
-
-    private OnClickListener addDataListener=new OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            User user=new User("admin","admin","admin");
-            LoginImpl login=new LoginImpl();
-            if(login.register(user)){
-                Toast.makeText(context,"注册成功！",Toast.LENGTH_SHORT);
-            }else{
-                Toast.makeText(context,"注册失败！",Toast.LENGTH_SHORT);
             }
         }
     };
@@ -90,12 +72,6 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
                 return true;
             }
         });
-
-        btAddData=(Button) findViewById(R.id.test_Add_bt);
-        btLogin=(Button) findViewById(R.id.test_login);
-
-        btAddData.setOnClickListener(addDataListener);
-        btLogin.setOnClickListener(clickListener);
 
        /* Intent intent=new Intent();
         intent.setClass(context,LoginActivity.class);*/
@@ -148,7 +124,7 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
 
 
         myLocationStyle=new MyLocationStyle();//初始化定位蓝点样式类
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW);//连续定位，跟随设备;
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);//定位一次，跟随设备;
         myLocationStyle.interval(2000);
         myLocationStyle.showMyLocation(true);
 
@@ -178,6 +154,23 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         }
     }
 
+    //TODO
+    private void testAddData(){
+        User user=new User("admin","admin","admin");
+        LoginImpl login=new LoginImpl();
+        if(login.register(user)){
+            Toast.makeText(context,"注册成功！",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context,"注册失败！",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void jumpLoginActivity(){
+        Intent intent=new Intent();
+        intent.setClass(context,LoginActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.toolbar,menu);
@@ -192,10 +185,13 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             case R.id.backup:
-                Toast.makeText(this,"You clicked Backup", Toast.LENGTH_SHORT).show();;
+                testAddData();
+                break;
+            case R.id.login:
+                jumpLoginActivity();
                 break;
             case R.id.delete:
-                Toast.makeText(this,"You clicked Delete",Toast.LENGTH_SHORT).show();;
+                Toast.makeText(this,"You clicked Delete",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.settings:
                 Toast.makeText(this,"You clicked Setings",Toast.LENGTH_SHORT).show();

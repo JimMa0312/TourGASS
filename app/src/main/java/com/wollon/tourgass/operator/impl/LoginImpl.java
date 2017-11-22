@@ -2,6 +2,7 @@ package com.wollon.tourgass.operator.impl;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.wollon.tourgass.dao.User;
 import com.wollon.tourgass.dao.UserDao;
@@ -9,6 +10,7 @@ import com.wollon.tourgass.dto.UserLogin;
 import com.wollon.tourgass.operator.IIndenity;
 import com.wollon.tourgass.util.MD5Utils;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -89,5 +91,17 @@ public class LoginImpl implements IIndenity {
             return users.get(0);
         }
         return null;
+    }
+
+
+    @Override
+    public boolean loginOut(Context context) {
+        File file=new File(".data/data/"+context.getPackageName().toString()+"/shared_prefs","account/xml");
+        if(file.exists()){
+            file.delete();
+            Toast.makeText(context,"删除成功",Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
     }
 }

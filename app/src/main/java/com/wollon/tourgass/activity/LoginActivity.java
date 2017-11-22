@@ -65,17 +65,16 @@ public class LoginActivity extends BaseActivity {
                     LoginActivity.this.finish();
                     Log.d("LoginActicvity","登录成功！");
                 }else{
-                    Toast.makeText(context,R.string.message_login,Toast.LENGTH_LONG);
+                    Toast.makeText(context,R.string.message_login,Toast.LENGTH_LONG).show();
                     Log.w("LoginActicvity","登录失败！");
                 }
             }
         });
 
         user=iIndenity.verificationUser(context);
-        Log.d("LoginActicvity","登录成功！");
         if(user!=null){
             LoginActivity.this.finish();
-            Log.w("LoginActicvity","登录失败！");
+            Log.w("LoginActicvity","成功！");
         }
     }
 }

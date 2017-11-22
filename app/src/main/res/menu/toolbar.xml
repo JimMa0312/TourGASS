@@ -4,7 +4,12 @@
     <item
         android:id="@+id/backup"
         android:icon="@drawable/ic_backup"
-        android:title="backup"
+        android:title="@string/test_add_db"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/login"
+        android:title="@string/login"
+        android:icon="@drawable/ic_maleuser"
         app:showAsAction="always"/>
     <item
         android:id="@+id/delete"

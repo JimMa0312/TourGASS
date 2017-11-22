@@ -30,27 +30,6 @@
                     android:id="@+id/map"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/test_Add_bt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:text="@string/test_add_db" />
-
-                    <Button
-                        android:id="@+id/test_login"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:text="@string/test_login" />
-                </LinearLayout>
             </LinearLayout>
 
 
