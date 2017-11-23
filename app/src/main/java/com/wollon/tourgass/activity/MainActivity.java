@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.maps.AMap;
@@ -48,33 +49,19 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         NavigationView navView=(NavigationView)findViewById(R.id.nav_view);
 
         /*navView.setCheckedItem(R.id.nav_call);*/
-        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });
-
-        AutoLogin();//实现自动登陆
+        navView.setNavigationItemSelectedListener(navigationListener);
 
         //初始化地图控制器对象
         if(aMap == null){
             aMap=mMapView.getMap();
         }
-
-
-
         mUiSetting=aMap.getUiSettings();
 
         settingnUI();
 
         Log.d("AmapSHA",MD5Utils.sHA1(context));
 
-
-
-        //TODO 自动登陆后续工作
-
+        AutoLogin();//实现自动登陆
     }
 
     @Override

@@ -58,11 +58,13 @@ public class LoginActivity extends BaseActivity {
                 password=etPassword.getText().toString();
                 UserLogin userLogin=new UserLogin(account,password);
                 user=iIndenity.login(userLogin);
-                if(cbAutoLogin.isChecked()){
-                    iIndenity.rememberUser(user,context);
-                }
                 if(user !=null){
+                    if(cbAutoLogin.isChecked()){
+                        iIndenity.rememberUser(user,context);
+                    }
                     LoginActivity.this.finish();
+                    isLogin=true;
+                    RemoveLogionItem();
                     Log.d("LoginActicvity","认证成功！");
                 }else{
                     Toast.makeText(context,R.string.message_login,Toast.LENGTH_LONG).show();

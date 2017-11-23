@@ -1,6 +1,7 @@
 package com.wollon.tourgass.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +19,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.wollon.tourgass.R;
@@ -63,7 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Toolbar toolbar;//工具栏
     protected DrawerLayout mDrawerLayout;//滑动菜单
     protected NavigationView navView;//拓展菜单
-
+    protected static Menu iMenu;//菜单；
     private void printLog() {
         Log.d(TAG, getClass().getName() + "----->" + Thread.currentThread().getStackTrace()[3].getMethodName());
     }
@@ -127,6 +131,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (user != null) {
                 Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
                 isLogin = true;
+
+                //RemoveLogionItem();
                 return isLogin;
             } else {
                 Toast.makeText(this, "登录失败！", Toast.LENGTH_SHORT).show();
@@ -137,6 +143,29 @@ public abstract class BaseActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * 视图优化方法：
+     * 删除工具栏中，login功能标签
+     */
+    protected void RemoveLogionItem(){
+        iMenu.removeItem(R.id.login);
+        ControlLoginButtn(View.GONE);
+    }
+
+    /**
+     * 控制按键显示和隐藏
+     * @param visibiliity
+     */
+    @SuppressLint("LongLogTag")
+    protected void ControlLoginButtn(int visibiliity){
+        Button button=(Button)findViewById(R.id.login_btn);
+        if(visibiliity==View.GONE || visibiliity==View.VISIBLE)
+            button.setVisibility(visibiliity);
+        else
+            Log.e("ControlLogrinButton --> BaseActicity","Input Error");
+    }
+
+
     protected void setmDrawerLayout(){
         mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         ActionBar actionBar=getSupportActionBar();
@@ -146,6 +175,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
     }
+
+
 
     //TODO
     private void testAddData(){
@@ -174,7 +205,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.toolbar,menu);
-
+        iMenu=menu;
+        if(isLogin){
+            RemoveLogionItem();
+        }
         return true;
     }
 
@@ -201,6 +235,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    /**
+     * 侧边工具栏的 功能实现调用方法
+     */
+    NavigationView.OnNavigationItemSelectedListener navigationListener=new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()){
+
+            }
+            mDrawerLayout.closeDrawers();
+            return true;
+        }
+    };
 
     //-----------权限问题
 
