@@ -1,10 +1,12 @@
 package com.wollon.tourgass.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -17,6 +19,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -145,6 +149,20 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void RemoveLogionItem(){
         iMenu.removeItem(R.id.login);
+        ControlLoginButtn(View.GONE);
+    }
+
+    /**
+     * 控制按键显示和隐藏
+     * @param visibiliity
+     */
+    @SuppressLint("LongLogTag")
+    protected void ControlLoginButtn(int visibiliity){
+        Button button=(Button)findViewById(R.id.login_btn);
+        if(visibiliity==View.GONE || visibiliity==View.VISIBLE)
+            button.setVisibility(visibiliity);
+        else
+            Log.e("ControlLogrinButton --> BaseActicity","Input Error");
     }
 
 
@@ -157,6 +175,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
     }
+
+
 
     //TODO
     private void testAddData(){
@@ -215,6 +235,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    /**
+     * 侧边工具栏的 功能实现调用方法
+     */
+    NavigationView.OnNavigationItemSelectedListener navigationListener=new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()){
+
+            }
+            mDrawerLayout.closeDrawers();
+            return true;
+        }
+    };
 
     //-----------权限问题
 
