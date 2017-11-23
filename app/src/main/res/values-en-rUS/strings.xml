@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">TourGASS</string>
     <string name="app_name_ch">TourGASS</string>
 
     <!-- activity_login -->
