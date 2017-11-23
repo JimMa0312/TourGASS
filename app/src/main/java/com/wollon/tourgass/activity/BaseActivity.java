@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -18,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.wollon.tourgass.R;
@@ -63,7 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Toolbar toolbar;//工具栏
     protected DrawerLayout mDrawerLayout;//滑动菜单
     protected NavigationView navView;//拓展菜单
-
+    protected static Menu iMenu;//菜单；
     private void printLog() {
         Log.d(TAG, getClass().getName() + "----->" + Thread.currentThread().getStackTrace()[3].getMethodName());
     }
@@ -127,6 +127,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (user != null) {
                 Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
                 isLogin = true;
+
+                //RemoveLogionItem();
                 return isLogin;
             } else {
                 Toast.makeText(this, "登录失败！", Toast.LENGTH_SHORT).show();
@@ -136,6 +138,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return false;
     }
+
+    /**
+     * 视图优化方法：
+     * 删除工具栏中，login功能标签
+     */
+    protected void RemoveLogionItem(){
+        iMenu.removeItem(R.id.login);
+    }
+
 
     protected void setmDrawerLayout(){
         mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
@@ -174,7 +185,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.toolbar,menu);
-
+        iMenu=menu;
+        if(isLogin){
+            RemoveLogionItem();
+        }
         return true;
     }
 

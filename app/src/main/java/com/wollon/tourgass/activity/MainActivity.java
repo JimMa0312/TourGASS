@@ -56,22 +56,17 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
             }
         });
 
-        AutoLogin();//实现自动登陆
-
         //初始化地图控制器对象
         if(aMap == null){
             aMap=mMapView.getMap();
         }
-
-
-
         mUiSetting=aMap.getUiSettings();
 
         settingnUI();
 
         Log.d("AmapSHA",MD5Utils.sHA1(context));
 
-
+        AutoLogin();//实现自动登陆
 
         //TODO 自动登陆后续工作
 
