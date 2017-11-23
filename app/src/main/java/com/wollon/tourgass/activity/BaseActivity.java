@@ -2,15 +2,28 @@ package com.wollon.tourgass.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.wollon.tourgass.R;
 import com.wollon.tourgass.dao.User;
+import com.wollon.tourgass.operator.IIndenity;
+import com.wollon.tourgass.operator.impl.LoginImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +60,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static User user;//存储用户信息
     public static boolean isLogin=false;//确认是否已经登录,默认未登陆
 
+    private Toolbar toolbar;//工具栏
+    private DrawerLayout mDrawerLayout;//滑动菜单
+    private NavigationView navView;//拓展菜单
+
     private void printLog() {
         Log.d(TAG, getClass().getName() + "----->" + Thread.currentThread().getStackTrace()[3].getMethodName());
     }
@@ -57,7 +74,26 @@ public abstract class BaseActivity extends AppCompatActivity {
         printLog();
         super.onCreate(savedInstanceState);
         context=this;
+
+
+
         init(savedInstanceState);
+
+        setToolbar();
+        setmDrawerLayout();
+        navView=(NavigationView)findViewById(R.id.nav_view);
+        NavigationView navView=(NavigationView)findViewById(R.id.nav_view);
+
+        /*navView.setCheckedItem(R.id.nav_call);*/
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
+
+        AutoLogin();//实现自动登陆
     }
 
     @Override
@@ -99,7 +135,91 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    /**
+     * 初始化时，实现自动登录功能
+     * @return
+     */
+    private boolean AutoLogin(){
+        if(!isLogin) {
+            IIndenity iIndenity = new LoginImpl();
+            user = iIndenity.verificationUser(this);
+            if (user != null) {
+                Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+                isLogin = true;
+                return isLogin;
+            } else {
+                Toast.makeText(this, "登录失败！", Toast.LENGTH_SHORT).show();
+                isLogin = false;
+                return isLogin;
+            }
+        }
+        return false;
+    }
 
+    private void setmDrawerLayout(){
+        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        ActionBar actionBar=getSupportActionBar();
+
+        if(actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
+    }
+
+    //TODO
+    private void testAddData(){
+        User user=new User("admin","admin","admin");
+        LoginImpl login=new LoginImpl();
+        if(login.register(user)){
+            Toast.makeText(context,"注册成功！",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context,"注册失败！",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void jumpLoginActivity(){
+        Intent intent=new Intent();
+        intent.setClass(context,LoginActivity.class);
+        startActivity(intent);
+    }
+
+    private void setToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.tool_bas);
+        setSupportActionBar(toolbar);
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.toolbar,menu);
+
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+            case R.id.backup:
+                testAddData();
+                break;
+            case R.id.login:
+                jumpLoginActivity();
+                break;
+            case R.id.delete:
+                Toast.makeText(this,"You clicked Delete",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.settings:
+                Toast.makeText(this,"You clicked Setings",Toast.LENGTH_SHORT).show();
+                break;
+            default:
+        }
+        return true;
+    }
 
     //-----------权限问题
 
