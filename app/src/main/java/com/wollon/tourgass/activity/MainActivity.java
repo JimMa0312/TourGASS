@@ -42,6 +42,21 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         mMapView=(MapView)findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
 
+        setToolbar();
+        setmDrawerLayout();
+        navView=(NavigationView)findViewById(R.id.nav_view);
+        NavigationView navView=(NavigationView)findViewById(R.id.nav_view);
+
+        /*navView.setCheckedItem(R.id.nav_call);*/
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
+
+        AutoLogin();//实现自动登陆
 
         //初始化地图控制器对象
         if(aMap == null){

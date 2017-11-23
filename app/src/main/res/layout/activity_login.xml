@@ -121,7 +121,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/checkbox"
                 android:button="@null"
-                android:checked="false"/>
+                android:checked="false"
+                android:textColor="@color/txt_gray" />
 
             <TextView
                 android:layout_width="match_parent"

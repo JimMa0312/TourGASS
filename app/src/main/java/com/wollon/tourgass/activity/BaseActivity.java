@@ -60,9 +60,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static User user;//存储用户信息
     public static boolean isLogin=false;//确认是否已经登录,默认未登陆
 
-    private Toolbar toolbar;//工具栏
-    private DrawerLayout mDrawerLayout;//滑动菜单
-    private NavigationView navView;//拓展菜单
+    protected Toolbar toolbar;//工具栏
+    protected DrawerLayout mDrawerLayout;//滑动菜单
+    protected NavigationView navView;//拓展菜单
 
     private void printLog() {
         Log.d(TAG, getClass().getName() + "----->" + Thread.currentThread().getStackTrace()[3].getMethodName());
@@ -74,26 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         printLog();
         super.onCreate(savedInstanceState);
         context=this;
-
-
-
         init(savedInstanceState);
-
-        setToolbar();
-        setmDrawerLayout();
-        navView=(NavigationView)findViewById(R.id.nav_view);
-        NavigationView navView=(NavigationView)findViewById(R.id.nav_view);
-
-        /*navView.setCheckedItem(R.id.nav_call);*/
-        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });
-
-        AutoLogin();//实现自动登陆
     }
 
     @Override
@@ -139,7 +120,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 初始化时，实现自动登录功能
      * @return
      */
-    private boolean AutoLogin(){
+    protected boolean AutoLogin(){
         if(!isLogin) {
             IIndenity iIndenity = new LoginImpl();
             user = iIndenity.verificationUser(this);
@@ -156,7 +137,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return false;
     }
 
-    private void setmDrawerLayout(){
+    protected void setmDrawerLayout(){
         mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         ActionBar actionBar=getSupportActionBar();
 
@@ -183,7 +164,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void setToolbar() {
+    protected void setToolbar() {
         toolbar = (Toolbar) findViewById(R.id.tool_bas);
         setSupportActionBar(toolbar);
     }
