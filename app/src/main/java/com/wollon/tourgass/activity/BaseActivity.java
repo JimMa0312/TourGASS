@@ -243,7 +243,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()){
-
+                case R.id.nav_plan:
+                    Intent intent=new Intent(context,PlanListActivity.class);
+                    startActivity(intent);
+                    break;
             }
             mDrawerLayout.closeDrawers();
             return true;
