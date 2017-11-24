@@ -11,6 +11,7 @@ import com.wollon.tourgass.R;
 
 public class ToolBarUtil {
     public static void CreateToolBarMenu(AppCompatActivity app, Menu menu){
+        menu.clear();
         app.getMenuInflater().inflate(R.menu.item_toolbar,menu);
     }
 
