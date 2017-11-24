@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">掌上导游APP</string>
     <string name="app_name_ch">掌上导游APP</string>
 
     <!-- activity_login -->
