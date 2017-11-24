@@ -21,7 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RemoteViews;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wollon.tourgass.R;
@@ -31,6 +31,8 @@ import com.wollon.tourgass.operator.impl.LoginImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by 漫聆默 on 2017/11/16 0016.
@@ -68,6 +70,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected DrawerLayout mDrawerLayout;//滑动菜单
     protected NavigationView navView;//拓展菜单
     protected static Menu iMenu;//菜单；
+
+    //导航栏用户信息显示窗口
+    protected static TextView navUserName;
+    protected static Button navLOginButton;
+    protected static CircleImageView navImage;
+
     private void printLog() {
         Log.d(TAG, getClass().getName() + "----->" + Thread.currentThread().getStackTrace()[3].getMethodName());
     }
@@ -158,9 +166,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     @SuppressLint("LongLogTag")
     protected void ControlLoginButtn(int visibiliity){
-        Button button=(Button)findViewById(R.id.login_btn);
         if(visibiliity==View.GONE || visibiliity==View.VISIBLE)
-            button.setVisibility(visibiliity);
+            navLOginButton.setVisibility(visibiliity);
         else
             Log.e("ControlLogrinButton --> BaseActicity","Input Error");
     }
@@ -204,7 +211,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.toolbar,menu);
+        getMenuInflater().inflate(R.menu.item_toolbar,menu);
         iMenu=menu;
         if(isLogin){
             RemoveLogionItem();

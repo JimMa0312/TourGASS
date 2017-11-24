@@ -17,7 +17,7 @@
 
     <!--动态更改text内容，在未登录时，不显示-->
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/nav_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/login"
@@ -27,7 +27,7 @@
         android:textSize="14sp" />
 
     <Button
-        android:id="@+id/login_btn"
+        android:id="@+id/nav_login_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

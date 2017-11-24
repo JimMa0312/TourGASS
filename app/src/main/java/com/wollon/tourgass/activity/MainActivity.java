@@ -1,5 +1,6 @@
 package com.wollon.tourgass.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.maps.AMap;
@@ -24,6 +27,7 @@ import com.wollon.tourgass.dao.User;
 import com.wollon.tourgass.operator.IIndenity;
 import com.wollon.tourgass.operator.impl.LoginImpl;
 import com.wollon.tourgass.util.MD5Utils;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener{
     private UiSettings mUiSetting;
@@ -46,10 +50,10 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         setToolbar();
         setmDrawerLayout();
         navView=(NavigationView)findViewById(R.id.nav_view);
-        NavigationView navView=(NavigationView)findViewById(R.id.nav_view);
-
-        /*navView.setCheckedItem(R.id.nav_call);*/
         navView.setNavigationItemSelectedListener(navigationListener);
+
+        //TODO
+        /*navView.setCheckedItem(R.id.nav_call);*/
 
         //初始化地图控制器对象
         if(aMap == null){
@@ -62,6 +66,8 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         Log.d("AmapSHA",MD5Utils.sHA1(context));
 
         AutoLogin();//实现自动登陆
+
+        registerNavElement();
     }
 
     @Override
@@ -140,7 +146,15 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         }
     }
 
-
+    /**
+     * 注册Nav中的组建
+     */
+    private void registerNavElement(){
+        View layoutHeader=(View) navView.inflateHeaderView(R.layout.nav_header);
+        navImage=layoutHeader.findViewById(R.id.icon_image);
+        navUserName=layoutHeader.findViewById(R.id.nav_username);
+        navLOginButton=layoutHeader.findViewById(R.id.nav_login_btn);
+    }
 }
 
 
