@@ -3,6 +3,7 @@ package com.wollon.tourgass.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +32,7 @@ public class PlanListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_plan_list,container,false);
 
-
+        ((CollapsingToolbarLayout)view.findViewById(R.id.collapsing_toolbar_layout)).setTitle(getString(R.string.app_name_ch));
 
         //初始化RecycleView
         planRecyclerView=view.findViewById(R.id.plan_recycler_view);
