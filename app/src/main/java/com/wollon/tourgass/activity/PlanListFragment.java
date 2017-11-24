@@ -30,6 +30,9 @@ public class PlanListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_plan_list,container,false);
+
+
+
         //初始化RecycleView
         planRecyclerView=view.findViewById(R.id.plan_recycler_view);
         //RecycleView设置manager
