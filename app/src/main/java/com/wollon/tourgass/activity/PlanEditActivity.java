@@ -3,6 +3,7 @@ package com.wollon.tourgass.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
 
 import java.util.UUID;
 
@@ -25,5 +26,10 @@ public class PlanEditActivity extends SingleFragmentActivity{
         UUID planId= (UUID) getIntent().getSerializableExtra(EXTRA_PLAN_ID);
 
         return PlanEditFragment.newInstance(planId);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 }
