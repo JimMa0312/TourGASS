@@ -43,6 +43,10 @@
         <activity android:name=".activity.plan.PlanListActivity"></activity>
         <activity android:name=".activity.plan.PlanEditActivity"></activity>
 
+        <activity android:name="com.amap.api.navi.AmapRouteActivity"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:configChanges="orientation|keyboard|screenSize"/>
+
         <service android:name="com.amap.api.location.APSService" ></service>
     </application>
 

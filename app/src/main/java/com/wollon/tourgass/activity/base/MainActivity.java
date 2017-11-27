@@ -12,26 +12,22 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.AMapException;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.help.Tip;
-import com.autonavi.ae.search.interfaces.OnSearchResultListener;
 import com.wollon.tourgass.R;
 import com.wollon.tourgass.util.AMapUtil;
 import com.wollon.tourgass.util.MD5Utils;
@@ -119,9 +115,6 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
 
     private void settingnUI(){
         mUiSetting.setCompassEnabled(true);//打开指南针
-
-
-
         myLocationStyle=new MyLocationStyle();//初始化定位蓝点样式类
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);//定位一次，跟随设备;
         myLocationStyle.interval(2000);
@@ -269,7 +262,7 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
     private void doSearchQuery(){
         showProgressDialog();
         currentPage=0;
-        query=new PoiSearch.Query(keyWord,"","北京");
+        query=new PoiSearch.Query(keyWord,"110000","");
         query.setPageSize(10);
         query.setPageNum(currentPage);
 
@@ -299,10 +292,10 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        String newText= searchText.toString().trim();
+        String newText= charSequence.toString().trim();
         if(!AMapUtil.IsEmptyOrNullString(newText)){
-            InputtipsQuery inputQuery=new InputtipsQuery(newText, "北京");
-            Inputtips inputtips=new Inputtips(this,inputQuery);
+            InputtipsQuery inputQuery=new InputtipsQuery(newText, "".trim());
+            Inputtips inputtips=new Inputtips(MainActivity.this,inputQuery);
             inputtips.setInputtipsListener(this);
             inputtips.requestInputtipsAsyn();
         }
@@ -315,50 +308,51 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
 
     @Override
     public void onGetInputtips(List<Tip> list, int i) {
-        if(i==1000){//返回成功
+        if(i== AMapException.CODE_AMAP_SUCCESS){//返回成功
             List<String> listString=new ArrayList<>();
             for(int j=0;j<list.size();j++){
                 listString.add(list.get(j).getName());
             }
-
             ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(
                     getApplicationContext(),
                     R.layout.route_inputs,listString);
+            searchText.setAdapter(arrayAdapter);
             arrayAdapter.notifyDataSetChanged();
         }else{
+            Log.e("AMapPOI","Error->"+i);
             Toast.makeText(this,"Error: "+i,Toast.LENGTH_SHORT).show();
         }
-    }
+        }
 
-    @Override
-    public void onPoiSearched(PoiResult result, int i) {
-        dissmissProgressDialog();//隐藏对话框
-        if(i==1000){
-            if (result!=null && result.getQuery()!=null){
-                if(result.getQuery().equals(query)){
-                    this.poiResult=result;
-                    //取得搜索到的poiitems有多少页
-                    List<PoiItem> poiItems=poiResult.getPois(); //取得第一页的poition数据，页数从0开始
-                    List<SuggestionCity>suggestionCities=poiResult.getSearchSuggestionCitys();//当搜索不到poiitem数据时，会返回有搜索关键字的城市
+        @Override
+        public void onPoiSearched(PoiResult result, int i) {
+            dissmissProgressDialog();//隐藏对话框
+            if(i==AMapException.CODE_AMAP_SUCCESS){
+                if (result!=null && result.getQuery()!=null){
+                    if(result.getQuery().equals(query)){
+                        this.poiResult=result;
+                        //取得搜索到的poiitems有多少页
+                        List<PoiItem> poiItems=poiResult.getPois(); //取得第一页的poition数据，页数从0开始
+                        List<SuggestionCity>suggestionCities=poiResult.getSearchSuggestionCitys();//当搜索不到poiitem数据时，会返回有搜索关键字的城市
 
-                    if(poiItems!=null && poiItems.size()>0){
-                        aMap.clear();//清理之前的图标
-                        PoiOverlay poiOverlay=new PoiOverlay(poiItems,aMap);
-                        poiOverlay.removeFromMap();
-                        poiOverlay.addToMap();
-                        poiOverlay.zommToSpan();
-                    }else if(suggestionCities !=null
-                            && suggestionCities.size()>0){
-                        //显示推荐城市
-                    }else{
-                        Toast.makeText(this,"对不起，没有相关数据",Toast.LENGTH_SHORT).show();
+                        if(poiItems!=null && poiItems.size()>0){
+                            aMap.clear();//清理之前的图标
+                            PoiOverlay poiOverlay=new PoiOverlay(poiItems,aMap);
+                            poiOverlay.removeFromMap();
+                            poiOverlay.addToMap();
+                            poiOverlay.zommToSpan();
+                        }else if(suggestionCities !=null
+                                && suggestionCities.size()>0){
+                            //显示推荐城市
+                        }else{
+                            Toast.makeText(this,"对不起，没有相关数据",Toast.LENGTH_SHORT).show();
+                        }
                     }
+                }else{
+                    Toast.makeText(this,"对不起，没有相关数据",Toast.LENGTH_SHORT).show();
                 }
             }else{
-                Toast.makeText(this,"对不起，没有相关数据",Toast.LENGTH_SHORT).show();
-            }
-        }else{
-            Toast.makeText(this,"错误： "+i,Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"错误： "+i,Toast.LENGTH_SHORT).show();
         }
     }
 
