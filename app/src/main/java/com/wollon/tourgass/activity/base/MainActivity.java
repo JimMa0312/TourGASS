@@ -1,4 +1,4 @@
-package com.wollon.tourgass.activity;
+package com.wollon.tourgass.activity.base;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -6,8 +6,6 @@ import android.support.design.widget.NavigationView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,11 +19,8 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.maps.model.Text;
 import com.wollon.tourgass.R;
 import com.wollon.tourgass.util.MD5Utils;
-
-import java.io.BufferedWriter;
 
 public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener,AMap.InfoWindowAdapter{
     private UiSettings mUiSetting;

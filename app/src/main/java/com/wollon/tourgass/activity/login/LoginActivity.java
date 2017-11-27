@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.wollon.tourgass.R;
-import com.wollon.tourgass.activity.BaseActivity;
+import com.wollon.tourgass.activity.base.BaseActivity;
 import com.wollon.tourgass.dto.UserLogin;
 import com.wollon.tourgass.operator.IIndenity;
 import com.wollon.tourgass.operator.impl.LoginImpl;

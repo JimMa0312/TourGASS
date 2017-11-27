@@ -3,9 +3,8 @@ package com.wollon.tourgass.activity.plan;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.view.Menu;
 
-import com.wollon.tourgass.activity.SingleFragmentActivity;
+import com.wollon.tourgass.activity.base.SingleFragmentActivity;
 
 import java.util.UUID;
 
@@ -30,8 +29,4 @@ public class PlanEditActivity extends SingleFragmentActivity {
         return PlanEditFragment.newInstance(planId);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
 }
