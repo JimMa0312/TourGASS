@@ -1,28 +1,48 @@
 package com.wollon.tourgass.activity.base;
 
+import android.app.ProgressDialog;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapException;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.core.SuggestionCity;
+import com.amap.api.services.help.Inputtips;
+import com.amap.api.services.help.InputtipsQuery;
+import com.amap.api.services.help.Tip;
+import com.autonavi.ae.search.interfaces.OnSearchResultListener;
 import com.wollon.tourgass.R;
+import com.wollon.tourgass.util.AMapUtil;
 import com.wollon.tourgass.util.MD5Utils;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
+import com.wollon.tourgass.util.overlay.PoiOverlay;
 
-public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener,AMap.InfoWindowAdapter{
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener,AMap.InfoWindowAdapter,Inputtips.InputtipsListener,TextWatcher,PoiSearch.OnPoiSearchListener{
     private UiSettings mUiSetting;
     private AMap aMap;
     private AMapLocationClient mapLocationClient=null;//调用AMapLocationCLient对象
@@ -31,6 +51,14 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
     private AMapLocationClientOption mLocationOption=null;//声明AMapLocationClientOption对象
 
     private MapView mMapView=null;
+
+    private AutoCompleteTextView searchText;// 输入搜索关键字
+    private String keyWord = "";// 要输入的poi搜索关键字
+    private ProgressDialog progDialog = null;// 搜索时进度条
+    private PoiResult poiResult; // poi返回的结果
+    private int currentPage = 0;// 当前页面，从0开始计数
+    private PoiSearch.Query query;// Poi查询条件类
+    private PoiSearch poiSearch;// POI搜索
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -62,13 +90,6 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         AutoLogin();//实现自动登陆
 
         registerNavElement();
-
-        //TODO
-        LatLng latLng= new LatLng(28.652556966145834,115.82443901909723);
-        Marker marker=aMap.addMarker(new MarkerOptions().position(latLng).title("南昌断电断水大学").snippet("DefaultMarker"));
-
-        LatLng latLng1=new LatLng(28.652,115.824);
-        Marker marker1=aMap.addMarker(new MarkerOptions().position(latLng1).title("自定义").snippet("自定义自定义自定义自定义自定义"));
     }
 
     @Override
@@ -119,8 +140,25 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         aMap.setOnMyLocationChangeListener(this);
 
         aMap.setInfoWindowAdapter(this);
+        setUpPOIMap();
     }
 
+    /**
+     *
+     */
+    private void setUpPOIMap(){
+        final Button searButton=(Button)findViewById(R.id.poi_select_btn);//POI查询按钮
+        //TODO searButton 绑定监听
+        searButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchButton();
+            }
+        });
+
+        searchText=(AutoCompleteTextView)findViewById(R.id.poi_findkey);
+        searchText.addTextChangedListener(this);
+    }
 
 
 
@@ -210,5 +248,131 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
 
         addPlanBtn.setOnClickListener(inforWindowClickListener);
         routeBtn.setOnClickListener(inforWindowClickListener);
+    }
+
+    /**
+     * 点击搜索按钮
+     */
+    public void searchButton(){
+        keyWord= AMapUtil.checkEditText(searchText);
+        if ("".equals(keyWord)){
+            Toast.makeText(this,"请输入搜索关键字",Toast.LENGTH_SHORT).show();
+            return;
+        }else{
+            doSearchQuery();
+        }
+    }
+
+    /**
+     * 开始进行POI搜索
+     */
+    private void doSearchQuery(){
+        showProgressDialog();
+        currentPage=0;
+        query=new PoiSearch.Query(keyWord,"","北京");
+        query.setPageSize(10);
+        query.setPageNum(currentPage);
+
+        poiSearch=new PoiSearch(this,query);
+        poiSearch.setOnPoiSearchListener(this);
+        poiSearch.searchPOIAsyn();
+    }
+
+    /**
+     * 显示进度框
+     */
+    private void showProgressDialog() {
+        if (progDialog==null){
+            progDialog=new ProgressDialog(this);
+        }
+        progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progDialog.setIndeterminate(false);
+        progDialog.setCancelable(false);
+        progDialog.setMessage("正在搜索:\n"+keyWord);
+        progDialog.show();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        String newText= searchText.toString().trim();
+        if(!AMapUtil.IsEmptyOrNullString(newText)){
+            InputtipsQuery inputQuery=new InputtipsQuery(newText, "北京");
+            Inputtips inputtips=new Inputtips(this,inputQuery);
+            inputtips.setInputtipsListener(this);
+            inputtips.requestInputtipsAsyn();
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+    }
+
+    @Override
+    public void onGetInputtips(List<Tip> list, int i) {
+        if(i==1000){//返回成功
+            List<String> listString=new ArrayList<>();
+            for(int j=0;j<list.size();j++){
+                listString.add(list.get(j).getName());
+            }
+
+            ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(
+                    getApplicationContext(),
+                    R.layout.route_inputs,listString);
+            arrayAdapter.notifyDataSetChanged();
+        }else{
+            Toast.makeText(this,"Error: "+i,Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onPoiSearched(PoiResult result, int i) {
+        dissmissProgressDialog();//隐藏对话框
+        if(i==1000){
+            if (result!=null && result.getQuery()!=null){
+                if(result.getQuery().equals(query)){
+                    this.poiResult=result;
+                    //取得搜索到的poiitems有多少页
+                    List<PoiItem> poiItems=poiResult.getPois(); //取得第一页的poition数据，页数从0开始
+                    List<SuggestionCity>suggestionCities=poiResult.getSearchSuggestionCitys();//当搜索不到poiitem数据时，会返回有搜索关键字的城市
+
+                    if(poiItems!=null && poiItems.size()>0){
+                        aMap.clear();//清理之前的图标
+                        PoiOverlay poiOverlay=new PoiOverlay(poiItems,aMap);
+                        poiOverlay.removeFromMap();
+                        poiOverlay.addToMap();
+                        poiOverlay.zommToSpan();
+                    }else if(suggestionCities !=null
+                            && suggestionCities.size()>0){
+                        //显示推荐城市
+                    }else{
+                        Toast.makeText(this,"对不起，没有相关数据",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }else{
+                Toast.makeText(this,"对不起，没有相关数据",Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(this,"错误： "+i,Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 隐藏对话框
+     */
+    private void dissmissProgressDialog() {
+        if (progDialog!=null){
+            progDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onPoiItemSearched(PoiItem poiItem, int i) {
+
     }
 }

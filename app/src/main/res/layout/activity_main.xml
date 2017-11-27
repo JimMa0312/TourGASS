@@ -47,7 +47,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/poi_select"/>
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/poi_findkey"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
