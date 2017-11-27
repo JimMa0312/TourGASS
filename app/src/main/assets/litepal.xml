@@ -4,5 +4,7 @@
     <version value="1"/>
     <list>
         <mapping class="com.wollon.tourgass.dao.User"/>
+        <mapping class="com.wollon.tourgass.dao.Scene"/>
+        <mapping class="com.wollon.tourgass.dao.Plan"/>
     </list>
 </litepal>

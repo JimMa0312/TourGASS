@@ -2,6 +2,9 @@ package com.wollon.tourgass.dao;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by JimMa on 2017/11/15.
  */
@@ -11,6 +14,8 @@ public class User extends DataSupport{
     private String account;//用户账号
     private String password;//用户密码
     private String nickname;//用户昵称
+
+    private List<Plan> plans=new ArrayList<>();
 
     public User() {
 
@@ -59,5 +64,13 @@ public class User extends DataSupport{
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public List<Plan> getPlans() {
+        return plans;
+    }
+
+    public void setPlans(List<Plan> plans) {
+        this.plans = plans;
     }
 }

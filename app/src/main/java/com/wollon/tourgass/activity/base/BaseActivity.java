@@ -1,4 +1,4 @@
-package com.wollon.tourgass.activity;
+package com.wollon.tourgass.activity.base;
 
 import android.Manifest;
 import android.annotation.SuppressLint;

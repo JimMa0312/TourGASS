@@ -93,7 +93,6 @@ public class LoginImpl implements IIndenity {
         return null;
     }
 
-
     @Override
     public boolean loginOut(Context context) {
         File file=new File(".data/data/"+context.getPackageName().toString()+"/shared_prefs","account/xml");
