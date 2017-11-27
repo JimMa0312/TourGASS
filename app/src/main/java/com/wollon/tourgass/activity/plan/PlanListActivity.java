@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.wollon.tourgass.R;
 
 import com.wollon.tourgass.activity.base.SingleFragmentActivity;
+import com.wollon.tourgass.util.ToolBarUtil;
 
 /**
  * Created by 漫聆默 on 2017/11/23 0023.
@@ -21,7 +22,7 @@ public class PlanListActivity extends SingleFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.list_toolbar,menu);
+        ToolBarUtil.CreateToolBarMenu(this,menu,R.menu.list_toolbar);
 
         return true;
     }
