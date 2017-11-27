@@ -1,4 +1,4 @@
-package com.wollon.tourgass.activity;
+package com.wollon.tourgass.activity.plan;
 
 import android.content.Context;
 

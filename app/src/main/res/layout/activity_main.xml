@@ -29,10 +29,36 @@
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
             </android.support.design.widget.AppBarLayout>
 
-            <com.amap.api.maps.MapView
-                android:id="@+id/map"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent">
+                <com.amap.api.maps.MapView
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginRight="60dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/poi_select"/>
+                    <EditText
+                        android:id="@+id/poi_findkey"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <Button
+                        android:id="@+id/poi_select_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/poi_select_btn"/>
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
 
 

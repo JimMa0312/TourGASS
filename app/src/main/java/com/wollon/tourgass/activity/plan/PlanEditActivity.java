@@ -1,9 +1,11 @@
-package com.wollon.tourgass.activity;
+package com.wollon.tourgass.activity.plan;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
+
+import com.wollon.tourgass.activity.SingleFragmentActivity;
 
 import java.util.UUID;
 
@@ -11,7 +13,7 @@ import java.util.UUID;
  * Created by 漫聆默 on 2017/11/23 0023.
  */
 
-public class PlanEditActivity extends SingleFragmentActivity{
+public class PlanEditActivity extends SingleFragmentActivity {
     private static final String EXTRA_PLAN_ID="com.wollon.tourgass.plan_id";
 
     public static Intent newIntent(Context packageContext, UUID planId){

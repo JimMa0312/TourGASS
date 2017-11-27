@@ -1,40 +1,39 @@
 package com.wollon.tourgass.activity;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.Text;
 import com.wollon.tourgass.R;
-import com.wollon.tourgass.dao.User;
-import com.wollon.tourgass.operator.IIndenity;
-import com.wollon.tourgass.operator.impl.LoginImpl;
 import com.wollon.tourgass.util.MD5Utils;
-import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener{
+import java.io.BufferedWriter;
+
+public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener,AMap.InfoWindowAdapter{
     private UiSettings mUiSetting;
     private AMap aMap;
     private AMapLocationClient mapLocationClient=null;//调用AMapLocationCLient对象
 
     private MyLocationStyle myLocationStyle;
+    private AMapLocationClientOption mLocationOption=null;//声明AMapLocationClientOption对象
 
     private MapView mMapView=null;
 
@@ -68,6 +67,13 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         AutoLogin();//实现自动登陆
 
         registerNavElement();
+
+        //TODO
+        LatLng latLng= new LatLng(28.652556966145834,115.82443901909723);
+        Marker marker=aMap.addMarker(new MarkerOptions().position(latLng).title("南昌断电断水大学").snippet("DefaultMarker"));
+
+        LatLng latLng1=new LatLng(28.652,115.824);
+        Marker marker1=aMap.addMarker(new MarkerOptions().position(latLng1).title("自定义").snippet("自定义自定义自定义自定义自定义"));
     }
 
     @Override
@@ -104,6 +110,8 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);//定位一次，跟随设备;
         myLocationStyle.interval(2000);
         myLocationStyle.showMyLocation(true);
+        myLocationStyle.strokeColor(R.color.green_focused);
+        myLocationStyle.radiusFillColor(R.color.green_focused);
 
         aMap.setMyLocationStyle(myLocationStyle);
         aMap.setMyLocationEnabled(true);
@@ -114,6 +122,8 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         mUiSetting.setScaleControlsEnabled(true);
 
         aMap.setOnMyLocationChangeListener(this);
+
+        aMap.setInfoWindowAdapter(this);
     }
 
 
@@ -155,8 +165,55 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         navUserName=layoutHeader.findViewById(R.id.nav_username);
         navLOginButton=layoutHeader.findViewById(R.id.nav_login_btn);
     }
+
+
+    @Override
+    public View getInfoWindow(Marker marker) {
+        View infoWindow=null;
+            infoWindow= LayoutInflater.from(this).inflate(R.layout.custom_info_window,null);
+        render(marker,infoWindow);
+        return infoWindow;
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
+        return null;
+    }
+
+    /**
+     * 自定義infowindow窗口
+     * @param marker
+     * @param view
+     */
+    public void render(final Marker marker, View view){
+
+        Button addPlanBtn=(Button)view.findViewById(R.id.add_plan_btn);
+        Button routeBtn=(Button)view.findViewById(R.id.add_route_btn);
+
+        TextView title=(TextView)view.findViewById(R.id.poi_title);
+        TextView support=(TextView)view.findViewById(R.id.poi_snippet);
+
+        title.setText(marker.getTitle());
+        support.setText(marker.getSnippet());
+
+        /**
+         * MarkInforWindow 事件处理器
+         */
+        View.OnClickListener inforWindowClickListener=new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.add_plan_btn:
+                        Toast.makeText(getApplicationContext(),"You Click Add Plane BTN "+marker.getTitle(),Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.add_route_btn:
+                        Toast.makeText(getApplicationContext(),"You Click Add Route BTN 经度: "+ marker.getPosition().latitude+" 维度："+marker.getPosition().longitude,Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        };
+
+        addPlanBtn.setOnClickListener(inforWindowClickListener);
+        routeBtn.setOnClickListener(inforWindowClickListener);
+    }
 }
-
-
-
-

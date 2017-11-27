@@ -1,17 +1,14 @@
-package com.wollon.tourgass.activity;
+package com.wollon.tourgass.activity.plan;
 
-import android.icu.text.CollationKey;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DialogTitle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.wollon.tourgass.R;
 import com.wollon.tourgass.dto.Plan;

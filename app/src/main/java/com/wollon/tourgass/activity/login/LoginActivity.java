@@ -1,9 +1,6 @@
-package com.wollon.tourgass.activity;
+package com.wollon.tourgass.activity.login;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.wollon.tourgass.R;
-import com.wollon.tourgass.dao.User;
+import com.wollon.tourgass.activity.BaseActivity;
 import com.wollon.tourgass.dto.UserLogin;
 import com.wollon.tourgass.operator.IIndenity;
 import com.wollon.tourgass.operator.impl.LoginImpl;

@@ -25,9 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wollon.tourgass.R;
+import com.wollon.tourgass.activity.login.LoginActivity;
+import com.wollon.tourgass.activity.plan.PlanListActivity;
 import com.wollon.tourgass.dao.User;
 import com.wollon.tourgass.operator.IIndenity;
 import com.wollon.tourgass.operator.impl.LoginImpl;
+import com.wollon.tourgass.util.ToolBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -211,7 +214,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.item_toolbar,menu);
+        ToolBarUtil.CreateToolBarMenu(this,menu,R.menu.item_toolbar);
         iMenu=menu;
         if(isLogin){
             RemoveLogionItem();
@@ -220,6 +223,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 侧边工具栏 功能激活
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

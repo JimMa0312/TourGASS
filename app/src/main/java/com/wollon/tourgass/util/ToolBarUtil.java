@@ -10,9 +10,9 @@ import com.wollon.tourgass.R;
  */
 
 public class ToolBarUtil {
-    public static void CreateToolBarMenu(AppCompatActivity app, Menu menu){
+    public static void CreateToolBarMenu(AppCompatActivity app, Menu menu, int menuItems){
         menu.clear();
-        app.getMenuInflater().inflate(R.menu.item_toolbar,menu);
+        app.getMenuInflater().inflate(menuItems,menu);
     }
 
 }
