@@ -20,8 +20,15 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.AmapNaviPage;
+import com.amap.api.navi.AmapNaviParams;
+import com.amap.api.navi.AmapNaviType;
+import com.amap.api.navi.INaviInfoCallback;
+import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.core.SuggestionCity;
@@ -38,7 +45,7 @@ import com.wollon.tourgass.util.overlay.PoiOverlay;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener,AMap.InfoWindowAdapter,Inputtips.InputtipsListener,TextWatcher,PoiSearch.OnPoiSearchListener{
+public class MainActivity extends BaseActivity implements AMap.OnMyLocationChangeListener,AMap.InfoWindowAdapter,Inputtips.InputtipsListener,TextWatcher,PoiSearch.OnPoiSearchListener,INaviInfoCallback{
     private UiSettings mUiSetting;
     private AMap aMap;
     private AMapLocationClient mapLocationClient=null;//调用AMapLocationCLient对象
@@ -55,6 +62,8 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
     private int currentPage = 0;// 当前页面，从0开始计数
     private PoiSearch.Query query;// Poi查询条件类
     private PoiSearch poiSearch;// POI搜索
+
+    private LatLng myLocationLat;
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -159,6 +168,7 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
     public void onMyLocationChange(Location location) {
         if(location != null) {
             Log.e("amap", "onMyLocationChange 定位成功， lat: " + location.getLatitude() + " lon: " + location.getLongitude());
+            myLocationLat=new LatLng(location.getLatitude(),location.getLongitude());
             Bundle bundle = location.getExtras();
             if(bundle != null) {
                 int errorCode = bundle.getInt(MyLocationStyle.ERROR_CODE);
@@ -234,6 +244,7 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
                         break;
                     case R.id.add_route_btn:
                         Toast.makeText(getApplicationContext(),"You Click Add Route BTN 经度: "+ marker.getPosition().latitude+" 维度："+marker.getPosition().longitude,Toast.LENGTH_SHORT).show();
+                        startMapNav(marker);
                         break;
                 }
             }
@@ -365,8 +376,61 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         }
     }
 
+    private void startMapNav(Marker endMarker){
+        Poi start=new Poi("当前位置",myLocationLat,"");
+        Poi endPoi=new Poi(endMarker.getTitle(),endMarker.getPosition(),"");
+        AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(),new AmapNaviParams(start,null,endPoi, AmapNaviType.DRIVER),MainActivity.this);
+    }
+
     @Override
     public void onPoiItemSearched(PoiItem poiItem, int i) {
+
+    }
+
+    /**
+     * 导航初始化失败时回调方法
+     */
+    @Override
+    public void onInitNaviFailure() {
+
+    }
+
+    /**
+     * 导航播报信息回调函数。s
+     * @param  s 语音播报文字
+     **/
+    @Override
+    public void onGetNavigationText(String s) {
+
+    }
+
+    @Override
+    public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
+
+    }
+
+    @Override
+    public void onArriveDestination(boolean b) {
+
+    }
+
+    @Override
+    public void onStartNavi(int i) {
+
+    }
+
+    @Override
+    public void onCalculateRouteSuccess(int[] ints) {
+
+    }
+
+    @Override
+    public void onCalculateRouteFailure(int i) {
+
+    }
+
+    @Override
+    public void onStopSpeaking() {
 
     }
 }
