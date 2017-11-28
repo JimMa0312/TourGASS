@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,12 +17,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wollon.tourgass.R;
+import com.wollon.tourgass.activity.base.BaseActivity;
 import com.wollon.tourgass.dto.Plan;
 import com.wollon.tourgass.util.ToolBarUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -38,10 +43,11 @@ public class PlanListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plan_list, container, false);
 
-        View listToolbarView=view.findViewById(R.id.plan_list_toolbar);
-        toolbar=(Toolbar) listToolbarView.findViewById(R.id.app_bar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        View listToolbarView = view.findViewById(R.id.plan_list_toolbar);
+        toolbar = (Toolbar) listToolbarView.findViewById(R.id.app_bar);
 
+        ((BaseActivity) getActivity()).setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
 
         //初始化RecycleView
         planRecyclerView = (RecyclerView) view.findViewById(R.id.plan_recycler_view);
@@ -53,21 +59,49 @@ public class PlanListFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.list_toolbar, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("PlanListFragment","onOptionsItemSelectde");
+        Toast.makeText(getActivity(),"setListen",Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()){
+            case R.id.list_delete:
+                Toast.makeText(getActivity(),"delete",Toast.LENGTH_SHORT).show();
+                /*
+                List<Plan> list=PlanLab.get(getActivity()).getPlan();
+                List<UUID> indexList=new ArrayList();
+                for(Plan plan:list){
+                    if(plan.isSolved()){
+                        indexList.add(plan.getId());
+                    }
+                }
+
+                for(int i=0;i<indexList.size();i++){
+                    list.remove(PlanLab.get(getActivity()).getPlan(indexList.get(i)));
+                }
+
+                updateUI();
+                */
+                break;
+            default:
+                Toast.makeText(getActivity(),"default",Toast.LENGTH_SHORT).show();
+
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         updateUI();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
 
     //设置Adapter
     private void updateUI() {
@@ -80,7 +114,6 @@ public class PlanListFragment extends Fragment {
         } else {
             planAdapter.notifyDataSetChanged();
         }
-
     }
 
     private class PlanHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

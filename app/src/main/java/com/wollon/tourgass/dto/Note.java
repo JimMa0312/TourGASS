@@ -4,17 +4,17 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Created by 漫聆默 on 2017/11/23 0023.
+ * Created by 漫聆默 on 2017/11/28 0028.
  */
 
-public class Plan {
+public class Note {
     private UUID id;
     private String title;
     private Date time;
     private String details;
     private boolean solved;
 
-    public Plan() {
+    public Note() {
         id=UUID.randomUUID();
         time=new Date();
         details ="";
@@ -59,6 +59,4 @@ public class Plan {
     public void setSolved(boolean solved) {
         this.solved = solved;
     }
-
-
 }

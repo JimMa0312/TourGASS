@@ -39,6 +39,10 @@ public class PlanLab {
         return plansList;
     }
 
+    public void setPlansList(List<Plan> plansList) {
+        this.plansList = plansList;
+    }
+
     //获取数组列表
     public Plan getPlan(UUID uuid){
         for(Plan plan:plansList){
@@ -48,4 +52,8 @@ public class PlanLab {
         }
         return null;
     }
+
+   /* public void delete(Plan plan){
+        plansList.remove(plan);
+    }*/
 }

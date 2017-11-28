@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.wollon.tourgass.R;
 import com.wollon.tourgass.activity.login.LoginActivity;
+import com.wollon.tourgass.activity.note.NoteListActivity;
 import com.wollon.tourgass.activity.plan.PlanListActivity;
 import com.wollon.tourgass.dao.User;
 import com.wollon.tourgass.operator.IIndenity;
@@ -257,9 +258,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     NavigationView.OnNavigationItemSelectedListener navigationListener=new NavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Intent intent=null;
             switch (item.getItemId()){
+                case R.id.nav_note:
+                    intent=new Intent(context, NoteListActivity.class);
+                    startActivity(intent);
+                    break;
                 case R.id.nav_plan:
-                    Intent intent=new Intent(context,PlanListActivity.class);
+                    intent=new Intent(context,PlanListActivity.class);
                     startActivity(intent);
                     break;
             }

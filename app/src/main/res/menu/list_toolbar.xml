@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/delete"
+        android:id="@+id/list_delete"
         android:icon="@drawable/ic_delete"
         android:title="Delete"
         app:showAsAction="always"/>
