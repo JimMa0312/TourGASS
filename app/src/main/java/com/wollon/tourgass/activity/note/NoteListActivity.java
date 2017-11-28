@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +21,9 @@ import com.wollon.tourgass.activity.base.BaseActivity;
 import com.wollon.tourgass.dto.Note;
 import com.wollon.tourgass.util.ToolBarUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by 漫聆默 on 2017/11/28 0028.
@@ -28,11 +32,14 @@ import java.util.List;
 public class NoteListActivity extends BaseActivity{
     private RecyclerView noteRecyclerView;
     private NoteAdapter noteAdapter;
+    private Toolbar toolbar;
 
     @Override
     protected void init(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_note_list);
         View listToolbarView = findViewById(R.id.note_list_toolbar);
+        toolbar=(Toolbar) listToolbarView.findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
 
         noteRecyclerView=(RecyclerView) findViewById(R.id.note_recycler_view);
         noteRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -57,21 +64,19 @@ public class NoteListActivity extends BaseActivity{
         switch (item.getItemId()){
             case R.id.list_delete:
                 Toast.makeText(this,"delete",Toast.LENGTH_SHORT).show();
-                /*
-                List<Plan> list=PlanLab.get(getActivity()).getPlan();
+                List<Note> list=NoteLab.get(this).getNote();
                 List<UUID> indexList=new ArrayList();
-                for(Plan plan:list){
-                    if(plan.isSolved()){
-                        indexList.add(plan.getId());
+                for(Note note:list){
+                    if(note.isSolved()){
+                        indexList.add(note.getId());
                     }
                 }
 
                 for(int i=0;i<indexList.size();i++){
-                    list.remove(PlanLab.get(getActivity()).getPlan(indexList.get(i)));
+                    list.remove(NoteLab.get(this).getNote(indexList.get(i)));
                 }
 
                 updateUI();
-                */
                 break;
             default:
                 Toast.makeText(this,"default",Toast.LENGTH_SHORT).show();
@@ -109,6 +114,15 @@ public class NoteListActivity extends BaseActivity{
             titleTextView = (TextView) itemView.findViewById(R.id.list_item_note_textView_title);
             timeTextView = (TextView) itemView.findViewById(R.id.list_item_note_textView_time);
             solvedCheckBox = (CheckBox) itemView.findViewById(R.id.list_item_note_checkbox);
+
+            solvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(b){
+                        mpNote.setSolved(b);
+                    }
+                }
+            });
         }
 
         //将Holder中的Plan数据在组件中展示

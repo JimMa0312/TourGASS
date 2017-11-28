@@ -46,7 +46,6 @@ public class NoteLab {
             if(note.getId().equals(uuid)){
                 return note;
             }
-
         }
         return null;
     }
