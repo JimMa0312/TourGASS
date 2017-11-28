@@ -40,6 +40,7 @@ import com.wollon.tourgass.util.AMapUtil;
 import com.wollon.tourgass.util.MD5Utils;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.wollon.tourgass.util.navtts.AmapTTSControler;
 import com.wollon.tourgass.util.overlay.PoiOverlay;
 
 import java.util.ArrayList;
@@ -62,6 +63,8 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
     private int currentPage = 0;// 当前页面，从0开始计数
     private PoiSearch.Query query;// Poi查询条件类
     private PoiSearch poiSearch;// POI搜索
+
+    private AmapTTSControler amapTTSControler;//讯飞语音控制器
 
     private LatLng myLocationLat;
 
@@ -95,12 +98,14 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         AutoLogin();//实现自动登陆
 
         registerNavElement();
+        setTTsControler();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+        amapTTSControler.destroy();
     }
 
     @Override
@@ -160,6 +165,14 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
 
         searchText=(AutoCompleteTextView)findViewById(R.id.poi_findkey);
         searchText.addTextChangedListener(this);
+    }
+
+    /**
+     * 生成 讯飞语音合成控制器
+     */
+    private void setTTsControler(){
+        amapTTSControler=AmapTTSControler.getInstance(getApplicationContext());
+        amapTTSControler.init();
     }
 
 
@@ -243,7 +256,7 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
                         Toast.makeText(getApplicationContext(),"You Click Add Plane BTN "+marker.getTitle(),Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.add_route_btn:
-                        Toast.makeText(getApplicationContext(),"You Click Add Route BTN 经度: "+ marker.getPosition().latitude+" 维度："+marker.getPosition().longitude,Toast.LENGTH_SHORT).show();
+                        Log.v("MainActivity","You Click Add Route BTN 经度: "+ marker.getPosition().latitude+" 维度："+marker.getPosition().longitude);
                         startMapNav(marker);
                         break;
                 }
@@ -401,7 +414,8 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
      **/
     @Override
     public void onGetNavigationText(String s) {
-
+        Log.v("语音播报文字--->",s);
+        amapTTSControler.onGetNavigationText(s);
     }
 
     @Override
@@ -431,6 +445,6 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
 
     @Override
     public void onStopSpeaking() {
-
+        amapTTSControler.stopSpeaking();
     }
 }
