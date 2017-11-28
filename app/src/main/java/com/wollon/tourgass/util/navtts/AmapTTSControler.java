@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.amap.api.navi.AMapNavi;
@@ -160,6 +161,6 @@ public class AmapTTSControler {
     public void onGetNavigationText(String arg1){
         if (wordList!=null)
             wordList.addLast(arg1);
-        //TODO
+        handler.obtainMessage(CHECK_TTS_PLAY).sendToTarget();
     }
 }
