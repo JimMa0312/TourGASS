@@ -1,6 +1,6 @@
 package com.wollon.tourgass.dto;
 
-import com.wollon.tourgass.util.DateUtils;
+import com.wollon.tourgass.util.DateUtil;
 
 import java.util.Date;
 import java.util.UUID;
@@ -13,12 +13,14 @@ public class Plan {
     private UUID id;
     private String title;
     private Date time;
+    private String place;
     private String details;
     private boolean solved;
 
     public Plan() {
         id=UUID.randomUUID();
         time=new Date();
+        place="";
         details ="";
     }
 
@@ -39,13 +41,21 @@ public class Plan {
     }
 
     public String getTime() {
-        String formDate= DateUtils.dateToStrLong(time);
+        String formDate= DateUtil.dateToStrShort(time);
 
         return formDate;
     }
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public String getDetails() {

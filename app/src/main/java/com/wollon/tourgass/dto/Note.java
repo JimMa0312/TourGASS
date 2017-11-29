@@ -1,6 +1,6 @@
 package com.wollon.tourgass.dto;
 
-import com.wollon.tourgass.util.DateUtils;
+import com.wollon.tourgass.util.DateUtil;
 
 import java.util.Date;
 import java.util.UUID;
@@ -39,7 +39,7 @@ public class Note {
     }
 
     public String getTime() {
-        String formDate=DateUtils.dateToStrLong(time);
+        String formDate= DateUtil.dateToStrLong(time);
 
         return formDate;
     }

@@ -45,6 +45,7 @@
         <activity android:name=".activity.note.NoteAddActivity"></activity>
         <activity android:name=".activity.plan.PlanListActivity"></activity>
         <activity android:name=".activity.plan.PlanEditActivity"></activity>
+        <activity android:name=".activity.plan.PlanAddActivity"></activity>
 
         <activity android:name="com.amap.api.navi.AmapRouteActivity"
             android:theme="@android:style/Theme.NoTitleBar"

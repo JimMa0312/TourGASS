@@ -3,6 +3,7 @@ package com.wollon.tourgass.activity.plan;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ public class PlanListFragment extends Fragment {
     private RecyclerView planRecyclerView;
     private PlanAdapter planAdapter;
     private Toolbar toolbar;
+    private FloatingActionButton fab;
     private List<Plan> list;
 
     @Nullable
@@ -52,6 +54,17 @@ public class PlanListFragment extends Fragment {
         planRecyclerView = (RecyclerView) view.findViewById(R.id.plan_recycler_view);
         //RecycleView设置manager
         planRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        fab=(FloatingActionButton) view.findViewById(R.id.plan_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setClass(getActivity(),PlanAddActivity.class);
+                startActivity(intent);
+            }
+        });
+
         updateUI();
 
         return view;
