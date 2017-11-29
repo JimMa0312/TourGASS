@@ -30,4 +30,8 @@
 
     <string name="poi_select">enter key words</string>
     <string name="poi_select_btn">GO</string>
+
+    <!--Toolbar-->
+    <string name="plan_list">List Plan</string>
+    <string name="plan_edit">Edit Plan</string>
 </resources>

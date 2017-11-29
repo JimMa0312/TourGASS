@@ -31,7 +31,6 @@ import java.util.UUID;
 /**
  * Created by 漫聆默 on 2017/11/23 0023.
  */
-
 public class PlanListFragment extends Fragment {
     private RecyclerView planRecyclerView;
     private PlanAdapter planAdapter;
@@ -48,6 +47,7 @@ public class PlanListFragment extends Fragment {
         toolbar = (Toolbar) listToolbarView.findViewById(R.id.app_bar);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
         setHasOptionsMenu(true);
 
         //初始化RecycleView

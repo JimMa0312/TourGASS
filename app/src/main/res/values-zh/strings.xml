@@ -30,4 +30,10 @@
 
     <string name="poi_select">输入关键字</string>
     <string name="poi_select_btn">搜索</string>
+
+    <!--Toolbar-->
+    <string name="plan_list">计划列表</string>
+    <string name="plan_edit">计划编辑</string>
+    <string name="note_list">日记列表</string>
+    <string name="note_edit">日记编辑</string>
 </resources>

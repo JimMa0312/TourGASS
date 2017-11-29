@@ -42,6 +42,7 @@ public class NoteListActivity extends BaseActivity{
         setContentView(R.layout.activity_note_list);
         View listToolbarView = findViewById(R.id.note_list_toolbar);
         toolbar=(Toolbar) listToolbarView.findViewById(R.id.app_bar);
+        toolbar.setTitle(R.string.note_list);
         setSupportActionBar(toolbar);
 
         fab=(FloatingActionButton) findViewById(R.id.note_fab);

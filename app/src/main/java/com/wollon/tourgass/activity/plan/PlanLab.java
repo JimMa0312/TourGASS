@@ -10,7 +10,7 @@ import java.util.UUID;
 
 /**
  * use 伪造数据
- *
+ * <p>
  * Created by 漫聆默 on 2017/11/23 0023.
  */
 
@@ -18,24 +18,24 @@ public class PlanLab {
     private static PlanLab planLab;
     private List<Plan> plansList;
 
-    public static PlanLab get(Context context){
-        if(planLab == null){
-            planLab=new PlanLab(context);
+    public static PlanLab get(Context context) {
+        if (planLab == null) {
+            planLab = new PlanLab(context);
         }
         return planLab;
     }
 
-    private PlanLab(Context context){
-        plansList=new ArrayList<>();
-        for(int i=0;i<30;i++){
-            Plan plan=new Plan();
-            plan.setTitle("标题#"+i);
-            plan.setSolved(i%2==0);
+    private PlanLab(Context context) {
+        plansList = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            Plan plan = new Plan();
+            plan.setTitle("标题#" + (i + 1));
+            plan.setSolved(i % 2 == 0);
             plansList.add(plan);
         }
     }
 
-    public List<Plan> getPlan(){
+    public List<Plan> getPlan() {
         return plansList;
     }
 
@@ -44,9 +44,9 @@ public class PlanLab {
     }
 
     //获取数组列表
-    public Plan getPlan(UUID uuid){
-        for(Plan plan:plansList){
-            if(plan.getId().equals(uuid)){
+    public Plan getPlan(UUID uuid) {
+        for (Plan plan : plansList) {
+            if (plan.getId().equals(uuid)) {
                 return plan;
             }
         }

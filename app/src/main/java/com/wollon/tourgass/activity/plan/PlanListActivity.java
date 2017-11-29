@@ -17,12 +17,12 @@ public class PlanListActivity extends SingleFragmentActivity {
         return new PlanListFragment();
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list_toolbar,menu);
 
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
