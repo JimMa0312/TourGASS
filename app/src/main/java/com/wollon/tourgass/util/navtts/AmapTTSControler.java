@@ -44,6 +44,7 @@ public class AmapTTSControler {
                         if (!isPlaying&&mTts!=null && wordList.size()>0){
                             isPlaying=true;
                             String playtts=wordList.removeFirst();
+                            Log.d("PlayerTts->",playtts);
                             if (mTts==null){
                                 createSynthesizer();
                             }

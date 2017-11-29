@@ -27,7 +27,7 @@ public class PlanLab {
 
     private PlanLab(Context context){
         plansList=new ArrayList<>();
-        for(int i=0;i<50;i++){
+        for(int i=0;i<30;i++){
             Plan plan=new Plan();
             plan.setTitle("标题#"+i);
             plan.setSolved(i%2==0);

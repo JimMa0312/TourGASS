@@ -3,6 +3,7 @@ package com.wollon.tourgass.activity.note;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +34,8 @@ public class NoteListActivity extends BaseActivity{
     private RecyclerView noteRecyclerView;
     private NoteAdapter noteAdapter;
     private Toolbar toolbar;
+    private FloatingActionButton fab;
+    private List<Note> list;
 
     @Override
     protected void init(@Nullable Bundle savedInstanceState) {
@@ -40,6 +43,16 @@ public class NoteListActivity extends BaseActivity{
         View listToolbarView = findViewById(R.id.note_list_toolbar);
         toolbar=(Toolbar) listToolbarView.findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+
+        fab=(FloatingActionButton) findViewById(R.id.note_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setClass(context,NoteAddActivity.class);
+                startActivity(intent);
+            }
+        });
 
         noteRecyclerView=(RecyclerView) findViewById(R.id.note_recycler_view);
         noteRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -64,7 +77,7 @@ public class NoteListActivity extends BaseActivity{
         switch (item.getItemId()){
             case R.id.list_delete:
                 Toast.makeText(this,"delete",Toast.LENGTH_SHORT).show();
-                List<Note> list=NoteLab.get(this).getNote();
+                list=NoteLab.get(this).getNote();
                 List<UUID> indexList=new ArrayList();
                 for(Note note:list){
                     if(note.isSolved()){
@@ -91,7 +104,7 @@ public class NoteListActivity extends BaseActivity{
     private void updateUI() {
         //获取Plan对象
         NoteLab noteLab = NoteLab.get(this);
-        List<Note> list = noteLab.getNote();
+        list = noteLab.getNote();
         if (noteAdapter == null) {
             noteAdapter = new NoteAdapter(list);
             noteRecyclerView.setAdapter(noteAdapter);

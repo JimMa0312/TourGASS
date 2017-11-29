@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,13 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wollon.tourgass.R;
-import com.wollon.tourgass.activity.base.BaseActivity;
 import com.wollon.tourgass.dto.Plan;
-import com.wollon.tourgass.util.ToolBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +35,7 @@ public class PlanListFragment extends Fragment {
     private RecyclerView planRecyclerView;
     private PlanAdapter planAdapter;
     private Toolbar toolbar;
+    private List<Plan> list;
 
     @Nullable
     @Override
@@ -46,7 +45,7 @@ public class PlanListFragment extends Fragment {
         View listToolbarView = view.findViewById(R.id.plan_list_toolbar);
         toolbar = (Toolbar) listToolbarView.findViewById(R.id.app_bar);
 
-        ((BaseActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
 
         //初始化RecycleView
@@ -66,13 +65,10 @@ public class PlanListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("PlanListFragment","onOptionsItemSelectde");
-        Toast.makeText(getActivity(),"setListen",Toast.LENGTH_SHORT).show();
         switch (item.getItemId()){
             case R.id.list_delete:
                 Toast.makeText(getActivity(),"delete",Toast.LENGTH_SHORT).show();
-                /*
-                List<Plan> list=PlanLab.get(getActivity()).getPlan();
+                list=PlanLab.get(getActivity()).getPlan();
                 List<UUID> indexList=new ArrayList();
                 for(Plan plan:list){
                     if(plan.isSolved()){
@@ -85,7 +81,6 @@ public class PlanListFragment extends Fragment {
                 }
 
                 updateUI();
-                */
                 break;
             default:
                 Toast.makeText(getActivity(),"default",Toast.LENGTH_SHORT).show();
@@ -102,12 +97,11 @@ public class PlanListFragment extends Fragment {
         updateUI();
     }
 
-
     //设置Adapter
     private void updateUI() {
         //获取Plan对象
         PlanLab planLab = PlanLab.get(getActivity());
-        List<Plan> list = planLab.getPlan();
+        list = planLab.getPlan();
         if (planAdapter == null) {
             planAdapter = new PlanAdapter(list);
             planRecyclerView.setAdapter(planAdapter);
@@ -130,6 +124,14 @@ public class PlanListFragment extends Fragment {
             titleTextView = (TextView) itemView.findViewById(R.id.list_item_plan_textView_title);
             timeTextView = (TextView) itemView.findViewById(R.id.list_item_plan_textView_time);
             solvedCheckBox = (CheckBox) itemView.findViewById(R.id.list_item_plan_checkbox);
+            solvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(b){
+                        mplan.setSolved(b);
+                    }
+                }
+            });
         }
 
         //将Holder中的Plan数据在组件中展示

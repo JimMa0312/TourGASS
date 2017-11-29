@@ -25,7 +25,7 @@ public class NoteLab {
 
     private NoteLab(Context context){
         noteList=new ArrayList<>();
-        for(int i=0;i<50;i++){
+        for(int i=0;i<15;i++){
             Note note=new Note();
             note.setTitle("日记#"+(i+1));
             note.setSolved(i%3==0);

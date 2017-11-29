@@ -1,5 +1,7 @@
 package com.wollon.tourgass.dto;
 
+import com.wollon.tourgass.util.DateUtils;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -36,8 +38,10 @@ public class Plan {
         this.title = title;
     }
 
-    public Date getTime() {
-        return time;
+    public String getTime() {
+        String formDate= DateUtils.dateToStrLong(time);
+
+        return formDate;
     }
 
     public void setTime(Date time) {
