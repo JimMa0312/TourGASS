@@ -200,7 +200,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    private void jumpLoginActivity(){
+    protected void jumpLoginActivity(){
         Intent intent=new Intent();
         intent.setClass(context,LoginActivity.class);
         startActivity(intent);

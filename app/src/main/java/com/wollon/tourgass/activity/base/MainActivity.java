@@ -213,6 +213,12 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         navImage=layoutHeader.findViewById(R.id.icon_image);
         navUserName=layoutHeader.findViewById(R.id.nav_username);
         navLOginButton=layoutHeader.findViewById(R.id.nav_login_btn);
+        navLOginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpLoginActivity();
+            }
+        });
     }
 
 
