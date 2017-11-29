@@ -43,12 +43,9 @@
                     android:background="@color/white"
                     android:layout_marginLeft="60dp"
                     android:layout_marginRight="60dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/poi_select"/>
                     <AutoCompleteTextView
                         android:id="@+id/poi_findkey"
+                        android:hint="@string/poi_select"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />

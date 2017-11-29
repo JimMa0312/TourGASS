@@ -28,6 +28,6 @@
     <string name="info_add_plan">Add plan</string>
     <string name="info_route">route</string>
 
-    <string name="poi_select">find: </string>
+    <string name="poi_select">enter key words</string>
     <string name="poi_select_btn">GO</string>
 </resources>

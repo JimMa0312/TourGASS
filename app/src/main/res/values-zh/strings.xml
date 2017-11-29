@@ -28,6 +28,6 @@
     <string name="info_add_plan">添加到计划</string>
     <string name="info_route">开始导航</string>
 
-    <string name="poi_select">查询：</string>
+    <string name="poi_select">输入关键字</string>
     <string name="poi_select_btn">搜索</string>
 </resources>
