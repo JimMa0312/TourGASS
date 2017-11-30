@@ -1,13 +1,16 @@
 package com.wollon.tourgass.activity.base;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -35,7 +38,12 @@ import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.help.Tip;
+import com.google.gson.Gson;
 import com.wollon.tourgass.R;
+import com.wollon.tourgass.activity.note.NoteListActivity;
+import com.wollon.tourgass.activity.plan.PlanListActivity;
+import com.wollon.tourgass.activity.scene.ScenicActivity;
+import com.wollon.tourgass.dto.PoiListZb;
 import com.wollon.tourgass.util.AMapUtil;
 import com.wollon.tourgass.util.MD5Utils;
 import com.amap.api.services.poisearch.PoiResult;
@@ -63,6 +71,7 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
     private int currentPage = 0;// 当前页面，从0开始计数
     private PoiSearch.Query query;// Poi查询条件类
     private PoiSearch poiSearch;// POI搜索
+    private List<PoiItem> poiItemList;
 
     private AmapTTSControler amapTTSControler;//讯飞语音控制器
 
@@ -80,7 +89,7 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
         setToolbar();
         setmDrawerLayout();
         navView=(NavigationView)findViewById(R.id.nav_view);
-        navView.setNavigationItemSelectedListener(navigationListener);
+        navView.setNavigationItemSelectedListener(navigationListenerMain);
 
         //TODO
         /*navView.setCheckedItem(R.id.nav_call);*/
@@ -363,6 +372,7 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
                         this.poiResult=result;
                         //取得搜索到的poiitems有多少页
                         List<PoiItem> poiItems=poiResult.getPois(); //取得第一页的poition数据，页数从0开始
+                        poiItemList=poiItems;
                         List<SuggestionCity>suggestionCities=poiResult.getSearchSuggestionCitys();//当搜索不到poiitem数据时，会返回有搜索关键字的城市
 
                         if(poiItems!=null && poiItems.size()>0){
@@ -453,4 +463,31 @@ public class MainActivity extends BaseActivity implements AMap.OnMyLocationChang
     public void onStopSpeaking() {
         amapTTSControler.stopSpeaking();
     }
+
+    /**
+     * 重写
+     * 侧边工具栏的 功能实现调用方法
+     */
+    NavigationView.OnNavigationItemSelectedListener navigationListenerMain=new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Intent intent=null;
+            switch (item.getItemId()){
+                case R.id.nav_scenic:
+                    if (poiItemList!=null && poiItemList.size()>0){
+                        PoiListZb poiListZb=new PoiListZb(poiItemList);
+                        intent=new Intent(MainActivity.this, ScenicActivity.class);
+                        intent.putExtra("pois",new Gson().toJson(poiListZb));
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(context,"无相关数据",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                default:
+                    MainActivity.super.navigationListener.onNavigationItemSelected(item);
+            }
+            mDrawerLayout.closeDrawers();
+            return true;
+        }
+    };
 }

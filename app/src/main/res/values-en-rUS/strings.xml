@@ -34,4 +34,6 @@
     <!--Toolbar-->
     <string name="plan_list">List Plan</string>
     <string name="plan_edit">Edit Plan</string>
+    <string name="note_list">List Diary</string>
+    <string name="note_edit">Edit Diary</string>
 </resources>

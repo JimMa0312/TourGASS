@@ -24,12 +24,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--<meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="141a9b67f01c41946d5c84e2b97248d0"/>-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="782f871b631a0578326660cffb71e9dc"/>
+            android:value="141a9b67f01c41946d5c84e2b97248d0"/>
+        <!--<meta-data-->
+            <!--android:name="com.amap.api.v2.apikey"-->
+            <!--android:value="782f871b631a0578326660cffb71e9dc"/>-->
         <activity android:name=".activity.base.MainActivity"
             android:label="@string/app_name_ch"
             android:windowSoftInputMode="stateHidden">
@@ -47,6 +47,7 @@
         <activity android:name=".activity.plan.PlanListActivity"></activity>
         <activity android:name=".activity.plan.PlanEditActivity"></activity>
         <activity android:name=".activity.plan.PlanAddActivity"></activity>
+        <activity android:name=".activity.scene.ScenicActivity"></activity>
 
         <activity android:name="com.amap.api.navi.AmapRouteActivity"
             android:theme="@android:style/Theme.NoTitleBar"
